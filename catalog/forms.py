@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator
 from datetime import date
-from .models import User, Application
+from .models import User, Application, Category
 
 
 class RegisterForm(forms.ModelForm):
@@ -111,9 +111,34 @@ class RegisterForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'patronymic', 'username', 'email')
 
 class ApplicationForm(forms.ModelForm):
-    class Meta:
-        model = Application
-        fields = ['title', 'description', 'category', 'image']
+    title = forms.CharField(
+        label="Название заявки",
+        max_length=200,
+    )
+
+    description = forms.CharField(
+        label="Описание",
+        widget=forms.Textarea,
+    )
+
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.Select,
+        label="Категория",
+        help_text="Выберите категорию."
+    )
+
+    image = forms.ImageField(
+        label="Изображение",
+    )
+
+    def clean_image(self):
+        image = self.cleaned_data.get("image")
+        if image:
+            if image.size > 2 * 1024 * 1024:
+                raise ValidationError("Размер изображения не должен превышать 2 Мб.")
+
+        return image
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -122,11 +147,6 @@ class ApplicationForm(forms.ModelForm):
             instance.save()
         return instance
 
-    def clean_image(self):
-        image = self.cleaned_data.get('image')
-        if image:
-            if image.size > 2 * 1024 * 1024:
-                raise forms.ValidationError("Максимальный размер изображения — 2 Мб")
-            if not image.name.split('.')[-1].lower() in ['jpg', 'jpeg', 'png', 'bmp']:
-                raise forms.ValidationError("Неверный формат изображения. Разрешены jpg, jpeg, png, bmp.")
-        return image
+    class Meta:
+        model = Application
+        fields = ['title', 'description', 'category', 'image']

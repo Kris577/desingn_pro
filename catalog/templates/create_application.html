@@ -1,10 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Создать заявку на дизайн интерьера</h2>
-  <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Создать заявку</button>
-  </form>
+  <section class="application">
+    <h2 class="application__title title">Создать заявку</h2>
+    <form method="post" enctype="multipart/form-data" class="application__form">
+        {% csrf_token %}
+
+        <div class="application__wrap">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+
+        <div class="application__wrap">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        <div class="application__wrap">
+            {{ form.category.label_tag }}
+            {{ form.category }}
+            {{ form.category.errors }}
+        </div>
+
+        <div class="application__wrap">
+            <label>
+            {{ form.image.label_tag }}
+            {{ form.image }}
+            {{ form.image.errors }}
+            </label>
+        </div>
+
+        <button type="submit" class="application__button">Создать заявку</button>
+    </form>
+  </section>
 {% endblock %}

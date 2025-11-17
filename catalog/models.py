@@ -15,6 +15,13 @@ class User(AbstractUser):
     def __str__(self):
         return self.first_name
 
+class Category(models.Model):
+
+    name = models.CharField(max_length=200, help_text="Выберите категорию")
+
+    def __str__(self):
+        return self.name
+
 class Application(models.Model):
     STATUS_CHOICES = [
         ('new', 'Новая'),
@@ -24,7 +31,7 @@ class Application(models.Model):
 
     title = models.CharField(verbose_name="Название",max_length=200)
     description = models.TextField()
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='applications/', max_length=2048)
     status = models.CharField(choices=STATUS_CHOICES, default='new', max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
