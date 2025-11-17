@@ -8,7 +8,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=200, verbose_name='Логин', unique=True, blank=False)
     email = models.CharField(max_length=254, verbose_name='Почта', unique=True, blank=False)
     password = models.CharField(max_length=254, verbose_name='Пароль', blank=False)
-    date_of_birth = models.DateField(verbose_name='Дата рождения', blank=False, default='2005-01-01')
+    date_of_birth = models.DateField(verbose_name='Дата рождения', blank=False, default='2007-01-01')
 
     USERNAME_FIELD = 'username'
 
