@@ -2,4 +2,23 @@
 
 {% block title %} Главная {% endblock %}
 
-{% block content %} <h1 class="title">Главная страница</h1> {% endblock %}
+{% block content %}
+    <section class="completed">
+        <h2 class="completed_title title">Последние выполненые заявки</h2>
+
+        <div class="completed_list">
+            {% for application in completed_applications %}
+                <article class="completed__card">
+                    <img src="{{ application.image.url }}" alt="{{ application.title }}">
+                    <div class="completed_content">
+                        <span class="completed_item"><strong>Временная метка:</strong> {{ application.created_at }}</span>
+                        <span class="completed_item"><strong>Название:</strong> {{ application.title }}</span>
+                        <span class="completed_item"><strong>Категория:</strong> {{ application.category }}</span>
+                    </div>
+                </article>
+            {% empty %}
+                <h3>Нет выполненных заявок для отображения.</h3>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
