@@ -5,7 +5,7 @@
 {% block content %}
   <section class="login">
       <h2 class="login__title title">Вход</h2>
-      <form method="post" enctype="multipart/form-data" class="login__form">
+      <form method="post" enctype="multipart/form-data" class="login_form">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="login_button">Войти</button>

@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Application
 from .forms import ApplicationForm
+from django.contrib.auth import login
 
 def index(request):
     return render(request, 'index.html')
