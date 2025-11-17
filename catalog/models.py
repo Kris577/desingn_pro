@@ -14,3 +14,21 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.first_name
+
+class Application(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'Новая'),
+        ('in_progress', 'Принято в работу'),
+        ('completed', 'Выполнено'),
+    ]
+
+    title = models.CharField(verbose_name="Название",max_length=200)
+    description = models.TextField()
+    category = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='applications/', max_length=2048)
+    status = models.CharField(choices=STATUS_CHOICES, default='new', max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

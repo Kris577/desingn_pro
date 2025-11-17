@@ -2,8 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator
 from datetime import date
-
-from .models import User
+from .models import User, Application
 
 
 class RegisterForm(forms.ModelForm):
@@ -110,3 +109,24 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'patronymic', 'username', 'email')
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ['title', 'description', 'category', 'image']
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.status = 'new'  # Устанавливаем статус по умолчанию
+        if commit:
+            instance.save()
+        return instance
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image:
+            if image.size > 2 * 1024 * 1024:
+                raise forms.ValidationError("Максимальный размер изображения — 2 Мб")
+            if not image.name.split('.')[-1].lower() in ['jpg', 'jpeg', 'png', 'bmp']:
+                raise forms.ValidationError("Неверный формат изображения. Разрешены jpg, jpeg, png, bmp.")
+        return image
