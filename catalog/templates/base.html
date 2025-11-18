@@ -16,6 +16,9 @@
     <header class=" container navbar d-flex flex-nowrap justify-content-between">
         <h1><a class="header_logo" href="{% url 'index' %}">Design.pro</a></h1>
             <nav class=" d-flex gap-5">
+                {% if user.is_staff %}
+                <a href="{% url 'admin_panel' %}" class="header__button button">Админка</a>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <a class="header_logo" href="{% url 'index' %}">Главная</a>
                 <a href="{% url 'profile' %}" class="header__button button">Профиль</a>
