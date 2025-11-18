@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
+{% block title %}<title> Удалить заявку </title>{% endblock %}
+
 {% block content %}
-  <section class="delete">
-    <h2 class="delete_title title">Удаление заявки</h2>
-    <p class="delete_text">Вы уверены, что хотите удалить заявку "{{ object.title }}"?</p>
-    <form method="post" class="delete_form">
-      {% csrf_token %}
-      <button type="submit" class="delete_button">Удалить</button>
-      <a href="{% url 'profile' %}" class="delete_link">Отмена</a>
-    </form>
-  </section>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="mb-0">Удаление заявки</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Вы уверены, что хотите удалить заявку "<strong>{{ object.title }}</strong>"?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                        <a href="{% url 'profile' %}" class="btn btn-secondary">Отмена</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

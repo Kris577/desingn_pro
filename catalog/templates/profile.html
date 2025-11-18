@@ -1,42 +1,46 @@
 {% extends "base.html" %}
 
+{% block title %}<title> Профиль </title>{% endblock %}
 {% block content %}
-<section class="profile">
-    <h2 class="profile_title">Профиль пользователя</h2>
-
-    <div class="profile_info">
-        <p class="profile_field"><strong>Имя:</strong> {{ user.first_name }}</p>
-        <p class="profile_field"><strong>Фамилия:</strong> {{ user.last_name }}</p>
-        <p class="profile_field"><strong>Отчество:</strong> {{ user.patronymic }}</p>
-        <p class="profile_field"><strong>Email:</strong> {{ user.email }}</p>
-        <p class="profile_field"><strong>Дата рождения:</strong> {{ user.date_of_birth }}</p>
+    <h1 class="my-4">Профиль пользователя</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Информация о пользователе</h5>
+            <p class="card-text">
+                <strong>Имя:</strong> {{ user.first_name }}<br>
+                <strong>Фамилия:</strong> {{ user.last_name }}<br>
+                <strong>Отчество:</strong> {{ user.patronymic }}<br>
+                <strong>Email:</strong> {{ user.email }}<br>
+                <strong>Дата рождения:</strong> {{ user.date_of_birth }}
+            </p>
+        </div>
     </div>
 
-    <h2 class="profile_title">Мои заявки</h2>
+    <h2 class="my-3">Мои заявки</h2>
 
     {% if user_applications %}
-        <div class="profile_applications">
+        <div class="row">
             {% for application in user_applications %}
-                <div class="profile_card">
-                    <div class="profile_header">
-                        <h3 class="profile_heading">{{ application.title }}</h3>
-                        <p class="card_time">{{ application.created_at }}</p>
-                    </div>
-                    <div class="profile_body">
-                        <p class="card_description"><strong>Описание:</strong> {{ application.description }}</p>
-                        <p class="card_category"><strong>Категория:</strong> {{ application.category }}</p>
-                        <p class="card_status"><strong>Статус:</strong> {{ application.get_status_display }}</p>
-                    </div>
-                    <div class="profile_buttons">
-                        <a href="{% url 'delete_application' application.id %}" class="profile_delete">Удалить</a>
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ application.title }}</h5>
+                            <p class="card-text flex-grow-1">
+                                <strong>Описание:</strong> {{ application.description }}<br>
+                                <strong>Категория:</strong> {{ application.category }}<br>
+                                <strong>Статус:</strong> <span class="badge {% if application.status == 'new' %}bg-info{% elif application.status == 'in_progress' %}bg-warning{% else %}bg-success{% endif %}">{{ application.get_status_display }}</span><br>
+                                <strong>Дата создания:</strong> {{ application.created_at }}
+                            </p>
+                            <div class="mt-auto">
+                                <a href="{% url 'delete_application' application.id %}" class="btn btn-sm btn-danger">Удалить</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-
     {% else %}
-        <p class="profile_message">У вас пока нет заявок</p>
+        <p class="text-muted">У вас пока нет заявок.</p>
     {% endif %}
-    <a href="{% url 'create_applications' %}" class="profile_create">Создать заявку</a>
-</section>
+    <a href="{% url 'create_applications' %}" class="btn btn-primary">Создать заявку</a>
 {% endblock %}

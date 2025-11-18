@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django_bootstrap5',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
 ]
