@@ -42,3 +42,8 @@ class Profile(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Application.objects.filter(user=self.request.user).order_by('-created_at')
+
+class ApplicationDelete(generic.DeleteView):
+    model = Application
+    template_name = 'delete_application.html'
+    success_url = reverse_lazy('profile')

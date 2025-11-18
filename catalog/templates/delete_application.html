@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <section class="delete">
+    <h2 class="delete_title title">Удаление заявки</h2>
+    <p class="delete_text">Вы уверены, что хотите удалить заявку "{{ object.title }}"?</p>
+    <form method="post" class="delete_form">
+      {% csrf_token %}
+      <button type="submit" class="delete_button">Удалить</button>
+      <a href="{% url 'profile' %}" class="delete_link">Отмена</a>
+    </form>
+  </section>
+{% endblock %}

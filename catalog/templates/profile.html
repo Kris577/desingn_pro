@@ -27,6 +27,9 @@
                         <p class="card_category"><strong>Категория:</strong> {{ application.category }}</p>
                         <p class="card_status"><strong>Статус:</strong> {{ application.get_status_display }}</p>
                     </div>
+                    <div class="profile_buttons">
+                        <a href="{% url 'delete_application' application.id %}" class="profile_delete">Удалить</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
