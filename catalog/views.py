@@ -41,7 +41,19 @@ class Profile(LoginRequiredMixin, generic.ListView):
     context_object_name = 'user_applications'
 
     def get_queryset(self):
-        return Application.objects.filter(user=self.request.user).order_by('-created_at')
+        user = self.request.user
+        status_filter = self.request.GET.get('status')
+        queryset = Application.objects.filter(user=user).order_by('-created_at')
+
+        if status_filter in ['new', 'in_progress', 'completed']:
+            queryset = queryset.filter(status=status_filter)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['status_filter'] = self.request.GET.get('status', '')
+        return context
 
 class ApplicationDelete(generic.DeleteView):
     model = Application

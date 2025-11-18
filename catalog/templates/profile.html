@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}<title> Профиль </title>{% endblock %}
+
 {% block content %}
     <h1 class="my-4">Профиль пользователя</h1>
     <div class="card mb-4">
@@ -18,6 +19,26 @@
 
     <h2 class="my-3">Мои заявки</h2>
 
+    <!-- Форма фильтрации с использованием Bootstrap -->
+    <form method="get" class="mb-4">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <label for="status" class="form-label">Фильтровать по статусу:</label>
+            </div>
+            <div class="col-auto">
+                <select name="status" id="status" class="form-select">
+                    <option value="" {% if status_filter == '' %}selected{% endif %}>Все</option>
+                    <option value="new" {% if status_filter == 'new' %}selected{% endif %}>Новая</option>
+                    <option value="in_progress" {% if status_filter == 'in_progress' %}selected{% endif %}>Принято в работу</option>
+                    <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Выполнено</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-primary">Применить фильтр</button>
+            </div>
+        </div>
+    </form>
+
     {% if user_applications %}
         <div class="row">
             {% for application in user_applications %}
@@ -28,7 +49,7 @@
                             <p class="card-text flex-grow-1">
                                 <strong>Описание:</strong> {{ application.description }}<br>
                                 <strong>Категория:</strong> {{ application.category }}<br>
-                                <strong>Статус:</strong> <span class="badge {% if application.status == 'new' %}bg-info{% elif application.status == 'in_progress' %}bg-warning{% else %}bg-success{% endif %}">{{ application.get_status_display }}</span><br>
+                                <strong>Статус:</strong> <span class="badge {% if application.status == 'new' %}bg-info{% elif application.status == 'in_progress' %}bg-warning text-dark{% else %}bg-success{% endif %}">{{ application.get_status_display }}</span><br>
                                 <strong>Дата создания:</strong> {{ application.created_at }}
                             </p>
                             <div class="mt-auto">
