@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import generic
+
+from desing_pro.asgi import application
 from .forms import RegisterForm
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
@@ -8,13 +10,9 @@ from .models import Application
 from .forms import ApplicationForm
 from django.contrib.auth import login
 
-class index(generic.ListView):
-    model = Application
-    template_name = 'index.html'
-    context_object_name = 'completed_applications'
-
-    def index(request):
-        return Application.objects.filter(status='completed').order_by('-created_at')[:4]
+def index(request):
+    context = {'completed_applications': Application.objects.filter(status='completed').order_by('-created_at')[:4]}
+    return render(request, 'index.html', context)
 
 class Register(generic.CreateView):
     template_name = 'registration/register.html'

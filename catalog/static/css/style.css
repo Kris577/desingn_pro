@@ -14,27 +14,4 @@ a {
 text-decoration: none;
 }
 
-body {
-    max-width: 1440px;
-    margin: auto;
-}
-
-.container {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0px 20px;
-}
-
-section {
-    gap: 10px
-    display: flex;
-    flex-decoration: column;
-}
-
-header {
-    padding: 20px 100px;
-    display: flex;
-    justify_content: space-between;
-    align-items: center;
-}
 
