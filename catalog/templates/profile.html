@@ -11,8 +11,7 @@
                 Имя:{{ user.first_name }}<br>
                 Фамилия: {{ user.last_name }}<br>
                 Отчество:{{ user.patronymic }}<br>
-                Email: {{ user.email }}<br>
-                Дата рождения: {{ user.date_of_birth }}
+                Email: {{ user.email }}
             </p>
         </div>
         {% if user.is_stuff %}
@@ -63,7 +62,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <p class="text-muted">У вас пока нет заявок.</p>
+        <p class="text-muted">У вас пока нет заявок</p>
     {% endif %}
     <a href="{% url 'create_applications' %}" class="btn btn-primary">Создать заявку</a>
 {% endblock %}

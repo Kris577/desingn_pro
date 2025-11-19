@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block title %}<title>Удалить категорию</title>{% endblock %}
+
+{% block content %}
+    <h1 class="my-4">Удалить категорию</h1>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="h5 mb-0">Список категорий</h3>
+        </div>
+        <div class="card-body">
+            {% if categories %}
+                <ul class="list-group">
+                    {% for category in categories %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>{{ category.name }}</span>
+                            <form method="post" action="{% url 'delete_category' category.id %}" style="display:inline;" onsubmit="return confirm('Вы уверены, что хотите удалить категорию \"{{ category.name }}\"? Все заявки этой категории будут удалены.');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Категорий нет.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mt-3">
+        <a href="{% url 'admin_panel' %}" class="btn btn-secondary">Назад к админ-панели</a>
+    </div>
+{% endblock %}
