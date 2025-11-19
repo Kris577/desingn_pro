@@ -132,14 +132,6 @@ class ApplicationForm(forms.ModelForm):
         label="Изображение",
     )
 
-    def clean_image(self):
-        image = self.cleaned_data.get("image")
-        if image:
-            if image.size > 2 * 1024 * 1024:
-                raise ValidationError("Размер изображения не должен превышать 2 Мб.")
-
-        return image
-
     def save(self, commit=True):
         instance = super().save(commit=False)
         instance.status = 'new'  # Устанавливаем статус по умолчанию

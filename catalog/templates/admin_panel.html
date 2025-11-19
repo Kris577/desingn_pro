@@ -34,7 +34,7 @@
                         <div class="col-md-4">
                             <label for="application_select" class="form-label">Выберите заявку:</label>
                             <select name="application_id" class="form-select" id="application_select" required>
-                                <option value="">-- Выберите заявку --</option>
+                                <option value="">Выберите заявку</option>
                                 {% for application in applications %}
                                     <option value="{{ application.id }}">
                                         {{ application.title }} (ID: {{ application.id }}, Статус: {{ application.get_status_display }})
